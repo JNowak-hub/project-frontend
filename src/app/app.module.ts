@@ -6,14 +6,8 @@ import {RouterModule, Routes} from '@angular/router';
 import { LoggingComponent } from './component/logging/logging.component';
 
 const routes: Routes = [{
-  // path: '...',
-  // component:
-}, {
-  // path: '...',
-  // component:
-}, {
-  // path: '...',
-  // component:
+  path: 'logging',
+  component: LoggingComponent
 }];
 
 @NgModule({
