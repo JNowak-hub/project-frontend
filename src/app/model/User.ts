@@ -5,6 +5,6 @@ export interface User {
   login: string;
   email: string;
   password: string;
-  birthDate: Date;
+  birthDate?: Date;
   provider: string;
 }

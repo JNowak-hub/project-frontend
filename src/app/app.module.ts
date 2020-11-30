@@ -6,11 +6,12 @@ import {RouterModule, Routes} from '@angular/router';
 import { LoggingComponent } from './component/logging/logging.component';
 import { RegisterComponent } from './component/register/register.component';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
-const routes: Routes = [{
-  path: 'logging',
-  component: LoggingComponent
-}];
+const routes: Routes = [
+  {path: 'logging', component: LoggingComponent},
+  {path: 'register', component: RegisterComponent}
+  ];
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ const routes: Routes = [{
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
