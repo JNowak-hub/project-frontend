@@ -9,7 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 
 const routes: Routes = [
-  {path: 'logging', component: LoggingComponent},
+  {path: 'login', component: LoggingComponent},
   {path: 'register', component: RegisterComponent}
   ];
 

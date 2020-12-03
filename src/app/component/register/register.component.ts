@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/User';
 import {UserService} from '../../service/userservice/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,17 +16,47 @@ export class RegisterComponent implements OnInit {
     password: '',
     login: '',
     birthDate: undefined,
-    firstName: '',
-    lastName: ''
+    firstName: undefined,
+    lastName: undefined
   };
 
+  errorMessages: {
+    login?: string[];
+    password?: string[];
+    email?: string[];
+    firstName?: string[];
+    lastName?: string[];
+    birthDate?: string[];
+  } = {};
 
-  constructor(private userService: UserService) { }
+  submitted = false;
+
+  constructor(private userService: UserService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }
 
-  onSubmit(): void{
-
+  onSubmit(): void {
+    this.userService.createNewUser(this.user).subscribe(
+      res => {
+        this.router.navigate(['/login']);
+      },
+      error => {
+        this.errorMessages = {};
+        if (error.status === 409) {
+          alert(error.error);
+          if (error.error.includes('Email')) {
+            this.errorMessages.email = [error.error];
+          }
+          if (error.error.includes('User')) {
+            this.errorMessages.login = [error.error];
+          }
+        } else {
+          this.errorMessages = error.error;
+        }
+        console.log(this.errorMessages);
+      });
+    this.submitted = true;
   }
 }
