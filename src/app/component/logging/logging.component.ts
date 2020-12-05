@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Authorization} from '../../model/Authorization';
+import {LoginService} from '../../service/loginservice/login-service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logging',
@@ -7,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoggingComponent implements OnInit {
 
-  constructor() { }
+ authorization: Authorization = {
+   username: '',
+   password: ''
+ };
+
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+
+  onSubmit(): void {
+
+    console.log(this.authorization);
+    this.loginService.login(this.authorization)
+      .subscribe(
+        res => {
+          localStorage.setItem('authorizationHeader', res.jwt);
+          this.router.navigate(['/']);
+          this.loginService.isAuthenticated = true;
+        },
+        error => {
+          alert(error.error);
+        }
+      );
+  }
 }
