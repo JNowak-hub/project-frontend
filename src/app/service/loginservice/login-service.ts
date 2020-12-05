@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class LoginService {
 
-  isAuthenticated = false;
+  public isAuthenticated = false;
   url = environment.baseUrl;
 
   constructor(private httpClient: HttpClient) { }
@@ -18,4 +18,9 @@ export class LoginService {
   login(authorization: Authorization): Observable<AuthorizationResponse>{
     return this.httpClient.post<AuthorizationResponse>(this.url + '/login' , authorization);
   }
+
+  validateToken(): Observable<void>{
+    return this.httpClient.get<void>(this.url + '/login/verifyToken');
+  }
+
 }

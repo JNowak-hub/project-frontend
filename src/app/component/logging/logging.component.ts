@@ -27,7 +27,7 @@ export class LoggingComponent implements OnInit {
     this.loginService.login(this.authorization)
       .subscribe(
         res => {
-          localStorage.setItem('authorizationHeader', res.jwt);
+          localStorage.setItem('jwt', res.jwt);
           this.router.navigate(['/']);
           this.loginService.isAuthenticated = true;
         },

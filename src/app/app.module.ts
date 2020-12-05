@@ -5,16 +5,20 @@ import { AppComponent } from './app.component';
 import {RouterModule, Routes} from '@angular/router';
 import { LoggingComponent } from './component/logging/logging.component';
 import { RegisterComponent } from './component/register/register.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { MainpageComponent } from './component/mainpage/mainpage.component';
 import { CarouselComponent } from './component/carousel/carousel.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
+import {AuthGuardGuard} from './guard/auth-guard.guard';
+import {AuthorizationInterceptorInterceptor} from './interceptor/authorization-interceptor.interceptor';
 
 const routes: Routes = [
   {path: 'login', component: LoggingComponent},
   {path: '', component: MainpageComponent},
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: 'myProfile', component: UserProfileComponent, canActivate: [AuthGuardGuard]}
   ];
 
 @NgModule({
@@ -24,7 +28,8 @@ const routes: Routes = [
     RegisterComponent,
     MainpageComponent,
     CarouselComponent,
-    NavbarComponent
+    NavbarComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule
   ],
-  providers: [],
+  providers: [{
+    useClass: AuthorizationInterceptorInterceptor,
+    multi: true,
+    provide: HTTP_INTERCEPTORS
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
