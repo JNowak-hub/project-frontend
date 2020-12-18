@@ -43,18 +43,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       error => {
-        this.errorMessages = {};
-        if (error.status === 409) {
-          alert(error.error);
-          if (error.error.includes('Email')) {
-            this.errorMessages.email = [error.error];
-          }
-          if (error.error.includes('User')) {
-            this.errorMessages.login = [error.error];
-          }
-        } else {
-          this.errorMessages = error.error;
-        }
+        this.errorMessages = error.error;
         console.log(this.errorMessages);
       });
     this.submitted = true;
